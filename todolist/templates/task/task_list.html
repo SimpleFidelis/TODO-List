@@ -1,0 +1,41 @@
+{% extends 'task/base.html' %}
+
+{% block title %}My Tasks{% endblock %}
+
+{% block content %}
+  <h1>My To-Do List</h1>
+
+  <div style="margin-bottom: 20px;">
+    <a href="{% url 'add_task' %}" class="btn">+ Add New Task</a>
+  </div>
+
+  {% if tasks %}
+    <div style="margin-top: 20px;">
+      {% for task in tasks %}
+        <div style="border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 5px; {% if task.completed %}background: #d4edda;{% endif %}">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="flex: 1;">
+              <h3 style="{% if task.completed %}text-decoration: line-through; color: #888;{% endif %}">
+                {{ task.title }}
+              </h3>
+              {% if task.description %}
+                <p style="color: #666; margin-top: 5px;">{{ task.description }}</p>
+              {% endif %}
+              <small style="color: #999;">Created: {{ task.created_at|date:"M d, Y H:i" }}</small>
+            </div>
+            <div style="display: flex; gap: 10px;">
+              <a href="{% url 'complete_task' task.id %}" class="btn {% if task.completed %}btn-success{% else %}btn{% endif %}">
+                {% if task.completed %}✓ Done{% else %}Mark Complete{% endif %}
+              </a>
+              <a href="{% url 'delete_task' task.id %}" class="btn btn-danger">Delete</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p style="text-align: center; color: #999; padding: 40px 0;">
+      No tasks yet! Click "Add New Task" to get started.
+    </p>
+  {% endif %}
+{% endblock %}

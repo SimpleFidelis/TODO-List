@@ -1,0 +1,35 @@
+{% extends 'task/base.html' %}
+
+{% block title %}Add Task{% endblock %}
+
+{% block content %}
+  <h1>Add New Task</h1>
+
+  <form method="POST" style="margin-top: 30px;">
+    {% csrf_token %}
+
+    <div style="margin-bottom: 20px;">
+      <label for="title" style="display: block; margin-bottom: 5px; font-weight: bold;">Task Title*</label>
+      <input
+        type="text"
+        id="title"
+        name="title"
+        required
+        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;">
+    </div>
+
+    <div style="margin-bottom: 20px;">
+      <label for="description" style="display: block; margin-bottom: 5px; font-weight: bold;">Description (optional)</label>
+      <textarea
+        id="description"
+        name="description"
+        rows="4"
+        style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;"></textarea>
+    </div>
+
+    <div style="display: flex; gap: 10px;">
+      <button type="submit" class="btn">Add Task</button>
+      <a href="{% url 'task_list' %}" class="btn" style="background: #95a5a6;">Cancel</a>
+    </div>
+  </form>
+{% endblock %}
